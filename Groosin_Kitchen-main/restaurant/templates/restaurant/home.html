@@ -1,0 +1,36 @@
+{% extends "restaurant/base.html" %}
+{% load static %}
+
+{% block content %}
+  {% if total_items == 0 %}
+    <p class="empty-state">Меню поки порожнє. Адміністратор ще готує щось смачненьке — зазирніть трохи пізніше! 🍷</p>
+  {% endif %}
+
+  {% for category in categories %}
+    {% if category.items.all %}
+      <section class="category-block">
+        <h2 class="category-title">{{ category.name }}<span class="rule"><span>❧</span></span></h2>
+        <div class="food-grid">
+          {% for item in category.items.all %}
+            {% include "restaurant/_food_card.html" %}
+          {% endfor %}
+        </div>
+      </section>
+    {% endif %}
+  {% endfor %}
+
+  {% if uncategorized %}
+    <section class="category-block">
+      <h2 class="category-title">Інші страви<span class="rule"><span>❧</span></span></h2>
+      <div class="food-grid">
+        {% for item in uncategorized %}
+          {% include "restaurant/_food_card.html" %}
+        {% endfor %}
+      </div>
+    </section>
+  {% endif %}
+{% endblock %}
+
+{% block dishes_json %}
+  <script id="dishes-data" type="application/json">{{ dishes_json|safe }}</script>
+{% endblock %}

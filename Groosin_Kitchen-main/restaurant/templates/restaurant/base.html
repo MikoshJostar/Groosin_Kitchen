@@ -1,0 +1,221 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="uk">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>
+    {% block title %}
+      Грузинська кухня — ресторан
+    {% endblock %}
+  </title>
+
+  <link
+    rel="stylesheet"
+    href="{% static 'restaurant/css/style.css' %}"
+  >
+
+</head>
+
+
+<body>
+
+  <div class="ornament-strip"></div>
+
+
+  <header class="site-header">
+
+    <div class="header-inner">
+
+      <span class="kicker">
+        ქართული სამზარეულო
+      </span>
+
+      <h1 class="site-title">
+        Грузинська кухня
+      </h1>
+
+      <p class="site-subtitle">
+        Гостинність та смак Кавказу — за кожним столом
+      </p>
+
+    </div>
+
+  </header>
+
+
+  <div class="ornament-strip"></div>
+
+
+  <!-- Користувацьке меню -->
+
+  <nav class="user-nav">
+
+    <div class="user-nav-inner">
+
+      <a href="{% url 'home' %}">
+        Меню
+      </a>
+
+
+      {% if user.is_authenticated %}
+
+        <span class="user-welcome">
+          Привіт, {{ user.username }}!
+        </span>
+
+        <a href="{% url 'my_orders' %}">
+          Мої замовлення
+        </a>
+
+        <a href="{% url 'logout' %}">
+          Вийти
+        </a>
+
+      {% else %}
+
+        <a href="{% url 'login' %}">
+          Увійти
+        </a>
+
+        <a href="{% url 'register' %}">
+          Реєстрація
+        </a>
+
+      {% endif %}
+
+    </div>
+
+  </nav>
+
+
+  <main>
+
+    {% if messages %}
+
+      <div class="messages">
+
+        {% for message in messages %}
+
+          <div class="message {{ message.tags }}">
+            {{ message }}
+          </div>
+
+        {% endfor %}
+
+      </div>
+
+    {% endif %}
+
+
+    {% block content %}
+
+    {% endblock %}
+
+  </main>
+
+
+  <footer class="site-footer">
+
+    <span>
+      &copy; {% now "Y" %}
+      Ресторан «Грузинська кухня».
+      Гамарджоба, дорогі гості!
+    </span>
+
+    <a href="/admin/">
+      Вхід для адміністратора
+    </a>
+
+  </footer>
+
+
+  <!-- Помічник -->
+
+  <div
+    id="assistant"
+    title="Натисніть, щоб отримати пораду шеф-кухаря"
+  >
+
+    <svg
+      viewBox="0 0 100 100"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+
+      <circle
+        cx="50"
+        cy="50"
+        r="47"
+        fill="#7a2036"
+      />
+
+      <circle
+        cx="50"
+        cy="50"
+        r="47"
+        fill="none"
+        stroke="#c9a55c"
+        stroke-width="2.5"
+      />
+
+      <circle
+        cx="50"
+        cy="50"
+        r="40"
+        fill="none"
+        stroke="#e3c98a"
+        stroke-width="1"
+        opacity="0.5"
+      />
+
+      <path
+        d="M38 30 Q34 46 42 62 Q46 70 54 70 Q62 70 60 60 Q52 58 50 48 Q48 38 56 32 Q50 26 38 30 Z"
+        fill="#e9d6a8"
+        stroke="#c9a55c"
+        stroke-width="1.5"
+      />
+
+      <circle
+        cx="55"
+        cy="66"
+        r="4.5"
+        fill="#e9d6a8"
+        stroke="#c9a55c"
+        stroke-width="1.2"
+      />
+
+      <path
+        d="M32 26 Q50 14 66 27"
+        stroke="#e3c98a"
+        stroke-width="2"
+        fill="none"
+        stroke-linecap="round"
+        opacity="0.8"
+      />
+
+    </svg>
+
+  </div>
+
+
+  <div id="assistant-bubble"></div>
+
+
+  {% block dishes_json %}
+
+  {% endblock %}
+
+
+  <script src="{% static 'restaurant/js/assistant.js' %}"></script>
+
+</body>
+
+</html>

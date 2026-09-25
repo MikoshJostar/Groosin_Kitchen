@@ -1,0 +1,74 @@
+<a
+    href="{% url 'food_detail' item.pk %}"
+    class="food-card-link"
+    aria-label="Відкрити {{ item.name }}"
+>
+    <div class="food-card">
+
+        <div class="img-wrap">
+
+            {% if item.image %}
+                <img
+                    src="{{ item.image.url }}"
+                    alt="{{ item.name }}"
+                >
+            {% else %}
+                <span class="no-image">🍽</span>
+            {% endif %}
+
+            <span class="price-ribbon">
+                {{ item.price }} ₴
+            </span>
+
+        </div>
+
+        <div class="food-card-body">
+
+            <h3>
+                {{ item.name }}
+            </h3>
+
+            {% if item.description %}
+                <p class="desc">
+                    {{ item.description }}
+                </p>
+            {% endif %}
+
+            <div class="tags">
+
+                {% if item.is_spicy %}
+                    <span class="tag">
+                        🌶 гостра
+                    </span>
+                {% endif %}
+
+                {% if item.is_vegetarian %}
+                    <span class="tag">
+                        🥗 вегетаріанська
+                    </span>
+                {% endif %}
+
+            </div>
+
+            <div class="meta">
+
+                {% if item.is_available %}
+                    <span class="badge available">
+                        В наявності
+                    </span>
+                {% else %}
+                    <span class="badge unavailable">
+                        Немає в наявності
+                    </span>
+                {% endif %}
+
+                <span class="details-link">
+                    Детальніше →
+                </span>
+
+            </div>
+
+        </div>
+
+    </div>
+</a>
