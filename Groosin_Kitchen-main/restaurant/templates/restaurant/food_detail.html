@@ -1,0 +1,122 @@
+{% extends "restaurant/base.html" %}
+
+{% block title %}
+    {{ item.name }} — Грузинська кухня
+{% endblock %}
+
+
+{% block content %}
+
+<div class="food-detail">
+
+    <a
+        href="{% url 'home' %}"
+        class="back-link"
+    >
+        ← Повернутися до меню
+    </a>
+
+
+    <div class="food-detail-card">
+
+        <!-- ФОТО ТОВАРУ -->
+
+        <div class="food-detail-image">
+
+            {% if item.image %}
+
+                <img
+                    src="{{ item.image.url }}"
+                    alt="{{ item.name }}"
+                >
+
+            {% else %}
+
+                <div class="detail-no-image">
+                    🍽
+                </div>
+
+            {% endif %}
+
+        </div>
+
+
+        <!-- ІНФОРМАЦІЯ ПРО ТОВАР -->
+
+        <div class="food-detail-info">
+
+            {% if item.category %}
+
+                <span class="detail-category">
+                    {{ item.category.name }}
+                </span>
+
+            {% endif %}
+
+
+            <h1>
+                {{ item.name }}
+            </h1>
+
+
+            <div class="detail-price">
+                {{ item.price }} ₴
+            </div>
+
+
+            {% if item.description %}
+
+                <p class="detail-description">
+                    {{ item.description }}
+                </p>
+
+            {% endif %}
+
+
+            <!-- ТЕГИ -->
+
+            <div class="detail-tags">
+
+                {% if item.is_spicy %}
+
+                    <span class="detail-tag">
+                        🌶 Гостра страва
+                    </span>
+
+                {% endif %}
+
+
+                {% if item.is_vegetarian %}
+
+                    <span class="detail-tag">
+                        🥗 Вегетаріанська
+                    </span>
+
+                {% endif %}
+
+            </div>
+
+
+            <!-- НАЯВНІСТЬ -->
+
+            {% if item.is_available %}
+
+                <div class="detail-availability available">
+                    ✓ Страва є в наявності
+                </div>
+
+            {% else %}
+
+                <div class="detail-availability unavailable">
+                    ✕ Страви зараз немає в наявності
+                </div>
+
+            {% endif %}
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}
