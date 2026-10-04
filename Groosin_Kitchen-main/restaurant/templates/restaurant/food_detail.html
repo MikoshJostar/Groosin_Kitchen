@@ -1,0 +1,186 @@
+{% extends "restaurant/base.html" %}
+
+{% block title %}
+    {{ item.name }} — Грузинська кухня
+{% endblock %}
+
+{% block content %}
+
+<div class="food-detail">
+
+    <a
+        href="{% url 'home' %}"
+        class="back-link"
+    >
+        ← Повернутися до меню
+    </a>
+
+
+    <div class="food-detail-card">
+
+        <div class="food-detail-image">
+
+            {% if item.image %}
+
+                <img
+                    src="{{ item.image.url }}"
+                    alt="{{ item.name }}"
+                >
+
+            {% else %}
+
+                <div class="detail-no-image">
+                    🍽
+                </div>
+
+            {% endif %}
+
+        </div>
+
+
+        <div class="food-detail-info">
+
+            {% if item.category %}
+
+                <span class="detail-category">
+                    {{ item.category.name }}
+                </span>
+
+            {% endif %}
+
+
+            <h1>
+                {{ item.name }}
+            </h1>
+
+
+            <div class="detail-price">
+                {{ item.price }} ₴
+            </div>
+
+
+            {% if item.description %}
+
+                <p class="detail-description">
+                    {{ item.description }}
+                </p>
+
+            {% endif %}
+
+
+            <div class="detail-tags">
+
+                {% if item.is_spicy %}
+
+                    <span class="detail-tag">
+                        🌶 Гостра страва
+                    </span>
+
+                {% endif %}
+
+                {% if item.is_vegetarian %}
+
+                    <span class="detail-tag">
+                        🥗 Вегетаріанська
+                    </span>
+
+                {% endif %}
+
+            </div>
+
+
+            {% if item.is_available %}
+
+                <div class="detail-availability available">
+                    ✓ Страва є в наявності
+                </div>
+
+
+                {% if user.is_authenticated %}
+
+                    <form
+                        method="post"
+                        action="{% url 'create_order' item.pk %}"
+                        class="order-form"
+                    >
+
+                        {% csrf_token %}
+
+                        <label for="quantity">
+                            Кількість
+                        </label>
+
+                        <input
+                            id="quantity"
+                            type="number"
+                            name="quantity"
+                            value="1"
+                            min="1"
+                            max="50"
+                        >
+
+
+                        <label for="comment">
+                            Коментар до замовлення
+                        </label>
+
+                        <textarea
+                            id="comment"
+                            name="comment"
+                            rows="3"
+                            placeholder="Наприклад: без цибулі..."
+                        ></textarea>
+
+
+                        <button
+                            type="submit"
+                            class="order-button"
+                        >
+                            🛒 Замовити
+                        </button>
+
+                    </form>
+
+                {% else %}
+
+                    <div class="login-to-order">
+
+                        <p>
+                            Щоб зробити замовлення,
+                            потрібно увійти в акаунт.
+                        </p>
+
+                        <a
+                            href="{% url 'login' %}?next={{ request.path }}"
+                            class="auth-button"
+                        >
+                            Увійти
+                        </a>
+
+                        <a
+                            href="{% url 'register' %}"
+                            class="register-order-link"
+                        >
+                            Зареєструватися
+                        </a>
+
+                    </div>
+
+                {% endif %}
+
+
+            {% else %}
+
+                <div class="detail-availability unavailable">
+                    ✕ Страви зараз немає в наявності
+                </div>
+
+            {% endif %}
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

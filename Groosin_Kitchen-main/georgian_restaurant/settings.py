@@ -132,13 +132,3 @@ MAILERS = {
         'BACKEND': 'django.core.mail.backends.console.EmailBackend',
     },
 }
-MIDDLEWARE = [
-'whitenoise.middleware.WhiteNoiseMiddleware',
-# інші middleware ...
-]
-...
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-...
-STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
-...
-ALLOWED_HOSTS = ['.onrender.com']
