@@ -26,3 +26,23 @@ class FoodItemAdmin(admin.ModelAdmin):
             "fields": ("price", "is_available", "is_spicy", "is_vegetarian")
         }),
     )
+
+
+from .models import Order, OrderItem
+
+
+class OrderItemInline(admin.TabularInline):
+    model = OrderItem
+    extra = 0
+    readonly_fields = ("food", "name", "price", "quantity")
+    can_delete = False
+
+
+@admin.register(Order)
+class OrderAdmin(admin.ModelAdmin):
+    list_display = ("id", "name", "phone", "total", "status", "created_at")
+    list_editable = ("status",)
+    list_filter = ("status", "created_at")
+    search_fields = ("name", "phone")
+    readonly_fields = ("total", "created_at")
+    inlines = [OrderItemInline]

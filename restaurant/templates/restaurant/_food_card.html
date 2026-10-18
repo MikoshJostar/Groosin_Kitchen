@@ -1,4 +1,4 @@
-<div class="food-card">
+<div class="food-card{% if item.is_available %} clickable{% endif %}" data-id="{{ item.id }}" data-name="{{ item.name|escapejs }}" data-price="{{ item.price|stringformat:'s' }}" data-desc="{{ item.description|escapejs }}" data-image="{% if item.image %}{{ item.image.url }}{% endif %}" data-available="{% if item.is_available %}1{% else %}0{% endif %}" {% if item.is_available %}tabindex="0" role="button"{% endif %}>
   <div class="img-wrap">
     {% if item.image %}
       <img src="{{ item.image.url }}" alt="{{ item.name }}">
@@ -23,5 +23,8 @@
         <span class="badge unavailable">Немає в наявності</span>
       {% endif %}
     </div>
+    {% if item.is_available %}
+      <button type="button" class="add-btn" data-add="{{ item.id }}">+ Додати в кошик</button>
+    {% endif %}
   </div>
 </div>
