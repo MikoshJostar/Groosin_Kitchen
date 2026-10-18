@@ -4,6 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="csrf-token" content="{{ csrf_token }}">
   <title>{% block title %}Грузинська кухня — ресторан{% endblock %}</title>
   <link rel="stylesheet" href="{% static 'restaurant/css/style.css' %}">
 </head>
@@ -44,8 +45,18 @@
   </div>
   <div id="assistant-bubble"></div>
 
+  <button id="cart-fab" type="button" aria-label="Кошик">🛒 <span id="cart-count">0</span></button>
+
+  <div id="modal-backdrop" hidden>
+    <div class="modal" role="dialog" aria-modal="true">
+      <button class="modal-close" type="button" aria-label="Закрити">×</button>
+      <div id="modal-body"></div>
+    </div>
+  </div>
+
   {% block dishes_json %}{% endblock %}
 
   <script src="{% static 'restaurant/js/assistant.js' %}"></script>
+  <script src="{% static 'restaurant/js/cart.js' %}"></script>
 </body>
 </html>
